@@ -1,0 +1,34 @@
+﻿@page
+@model YouthGroup.Pages.UserRoles.CreateModel
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+
+<h1>Create New Roles</h1>
+
+<p>
+    <form method="post">
+        <label asp-for="NewRole" /><input asp-for="NewRole" class="form-control" /><br/><input type="submit" value="Create Role" class="btn btn-primary" />
+    </form>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Role
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Roles)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

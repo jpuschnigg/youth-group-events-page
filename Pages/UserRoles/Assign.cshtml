@@ -1,0 +1,40 @@
+﻿@page
+@model YouthGroup.Pages.UserRoles.AssignModel
+
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+
+<h1>Assign Roles</h1>
+
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="UserValue" class="control-label"></label>
+                <select asp-for="UserValue" class="form-control" asp-items='(SelectList)ViewData["users"]'>
+                    <option value="">Unassigned</option>
+                </select>
+                <span asp-validation-for="UserValue" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="RoleValue" class="control-label"></label>
+                <select asp-for="RoleValue" class="form-control" asp-items='(SelectList)ViewData["roles"]'>
+                    <option value="">Unassigned</option>
+                </select>
+                <span asp-validation-for="RoleValue" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

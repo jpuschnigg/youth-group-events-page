@@ -1,0 +1,44 @@
+﻿@page
+@model YouthGroup.Pages.Admin.CreateModel
+
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+
+<!-- Author: Jack Puschnigg -->
+
+
+<h1>Create A New Post</h1>
+
+<!-- Forms that accept info for creating a new post such as title, desc, etc. -->
+<form method="post" enctype="multipart/form-data">
+    <div asp-validation-summary="All"></div>
+    <div class="form-group">
+        <label for="exampleFormControlInput1">Name</label>
+        <input asp-for="Post.Name" class="form-control" placeholder="First and Last name">
+    </div>
+    <div class="form-group">
+        <label for="exampleFormControlInput2">Post Title</label>
+        <input asp-for="Post.Title" class="form-control" placeholder="Create a Title">
+    </div>
+    <div class="form-group">
+        <label for="exampleFormControlTextarea1">Post Description</label>
+        <textarea class="form-control" asp-for="Post.Desc" rows="3" placeholder="Write a Short Description"></textarea>
+    </div>
+    <div class="form-group">
+        <input type="file" asp-for="Image" />
+    </div>
+
+    <!-- Submit and delete posts button -->
+    <button type="submit" class="btn btn-primary mb-2" value="submit" style="background-color: #52ab98; border: none">Submit</button>
+    <button type="submit" class="btn btn-primary mb-2" value="delete" asp-page-handler="Delete" style="background-color: #52ab98; border: none">Delete All Posts</button>
+</form>
+
+<div>
+    <a asp-page="Index" class="btn btn-primary mb-2" style="background-color: #52ab98; border: none">Back to Posts</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

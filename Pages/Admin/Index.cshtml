@@ -1,0 +1,292 @@
+﻿@page
+@model YouthGroup.Pages.Admin.IndexModel
+@using Microsoft.Extensions.Configuration
+@using WebMatrix.Data
+@using System.Configuration
+
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+
+<!-- Author: Jack Puschnigg -->
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+    <meta name="generator" content="Hugo 0.88.1">
+    <title>Album example · Bootstrap v5.1</title>
+
+    <link rel="canonical" href="https://getbootstrap.com/docs/5.1/examples/album/">
+
+    <!-- Bootstrap core CSS -->
+    <link href="/docs/5.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+    <!-- Favicons -->
+    <link rel="apple-touch-icon" href="/docs/5.1/assets/img/favicons/apple-touch-icon.png" sizes="180x180">
+    <link rel="icon" href="/docs/5.1/assets/img/favicons/favicon-32x32.png" sizes="32x32" type="image/png">
+    <link rel="icon" href="/docs/5.1/assets/img/favicons/favicon-16x16.png" sizes="16x16" type="image/png">
+    <link rel="manifest" href="/docs/5.1/assets/img/favicons/manifest.json">
+    <link rel="mask-icon" href="/docs/5.1/assets/img/favicons/safari-pinned-tab.svg" color="#7952b3">
+    <link rel="icon" href="/docs/5.1/assets/img/favicons/favicon.ico">
+    <meta name="theme-color" content="#7952b3">
+
+    <!-- CSS for the container that holds the post 'cards' as well as the cards themselves -->
+    <style>
+
+        .bd-placeholder-img {
+            font-size: 1.125rem;
+            text-anchor: middle;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            user-select: none;
+        }
+
+        @@media (min-width: 768px) {
+            .bd-placeholder-img-lg {
+                font-size: 3.5rem;
+            }
+        }
+
+        .container, .container-lg, .container-md, .container-sm, .container-xl, .container-xxl {
+            max-width: 1320px;
+        }
+
+        .shadow-sm {
+            box-shadow: 0 .125rem .25rem rgba(0,0,0,.075) !important;
+        }
+
+        .card {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            flex-wrap: wrap;
+            min-width: 400px;
+            word-wrap: break-word;
+            background-color: #fff;
+            background-clip: border-box;
+            border: 1px solid rgba(0,0,0,.125);
+            border-radius: .25rem;
+        }
+
+        .col {
+            padding: 5px;
+        }
+    </style>
+
+</head>
+<body>
+    <header>
+
+        <!-- Change color of the nav bar here -->
+        <div class="navbar navbar-dark shadow-sm" style="background-color: #1e4b57 ">
+            <div class="container">
+                <a href="#" class="navbar-brand d-flex align-items-center" style="color: #ffffff">
+                    <strong>Latest Posts</strong>
+                </a>
+
+                <!-- Create posts and approve users buttons -->
+                <button onclick="location.href='/Admin/Create'" type="button" class="btn btn-secondary" style="background-color: #52ab98; color: #ffffff; border: none;">Create A Post</button>
+                <button onclick="location.href='/UserRoles'" type="button" class="btn btn-secondary" style="background-color: #52ab98; color: #ffffff; border: none;">Approve New Users</button>
+            </div>
+        </div>
+    </header>
+
+    <main>
+
+        <!-- Div that contains all of the posts -->
+        <div class="album py-5" style="background-color: #ffffff">
+            <div class="container">
+                <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+
+                    <!-- Displays all of the new posts that are stored in the DB -->
+                    @for (int i = IndexModel.Posts.Count - 1; i >= 0; i--)
+                    {
+                        @if (IndexModel.Posts[i].Name != null)
+                        {
+                            <div class="col">
+                                <div class="card shadow-sm">
+                                    <img src="~/img/@IndexModel.Posts[i].ImageName" alt="debug" width="100%" height="275px" preserveAspectRatio="none">
+
+                                    <div class="card-body">
+                                        <h4>@IndexModel.Posts[i].Title</h4>
+                                        <p class="card-text">
+                                            @IndexModel.Posts[i].Desc
+                                        </p>
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <small class="text-muted">@IndexModel.Posts[i].Name <br /> @IndexModel.Posts[i].Time</small>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    }
+
+                    <!-- Posts that are hardcoded in so that there is always content on the page, even after pressing 'delete posts' button -->
+                    <div class="col">
+                        <div class="card shadow-sm">
+                            <img src="/img/buddha.jpg" alt="jesus and Buddha" width="100%" height="275px" preserveAspectRatio="none">
+
+                            <div class="card-body">
+                                <h4>Meeting Worship with Stillness</h4>
+                                <p class="card-text">
+                                    While Jesus was not a Buddhist, and Gautama Buddha was not a Christian- the two have a lot in common. This week we will discuss the spiritual synergy that arises when we follow the
+                                    life and Word of our Lord along with Buddhist wisdom for a happy life.
+                                </p>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <small class="text-muted">Father Ananda  <br />   4/17/22 4:17PM</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Another Post -->
+                    <div class="col">
+                        <div class="card shadow-sm">
+                            <img src="/img/ashWednesday.jpg" alt="ash wednesday" width="100%" height="275px" preserveAspectRatio="none">
+
+                            <div class="card-body">
+                                <h4>Ashes to Ashes</h4>
+                                <p class="card-text">
+                                    On this Ash Wednesday, we remember the sins we have commited over the past year. Like the ancient Israelites, we offer penence for our deeds through
+                                    the ceremonial annoiting of ashes.
+                                </p>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <small class="text-muted">Brother Chester <br />    4/10/22 10:42AM</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Another Post -->
+                    <div class="col">
+                        <div class="card shadow-sm">
+                            <img src="/img/christianDemographics.png" alt="demographics" width="100%" height="275px" preserveAspectRatio="none">
+
+                            <div class="card-body">
+                                <h4>Rise and Fall</h4>
+                                <p class="card-text">
+                                    Recent surveys show the steep decline of Christianity in Europe, while Christians in other regions, such as Sub-Saharan Africa and the Americas, show their numbers
+                                    are steadily increasing.
+                                </p>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <small class="text-muted">Reverend Brown  <br />   4/1/22 12:21PM</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Another Post -->
+                    <div class="col">
+                        <div class="card shadow-sm">
+                            <img src="/img/christianSocialMedia.png" alt="social media" width="100%" height="275px" preserveAspectRatio="none">
+
+                            <div class="card-body">
+                                <h4>Being a Virtual Voice of God</h4>
+                                <p class="card-text">
+                                    Social media has proven itself to be a large influence on the world. Join our Sunday podcast that features
+                                    talks on how to be a servant of God through the skillful use of social media.
+                                </p>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <small class="text-muted">Father Michael  <br />    3/27/22 11:34AM</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Another Post -->
+                    <div class="col">
+                        <div class="card shadow-sm">
+                            <img src="/img/randomGuyLol.jpg" alt="summit" width="100%" height="275px" preserveAspectRatio="none">
+
+                            <div class="card-body">
+                                <h4>Reaching the Summit</h4>
+                                <p class="card-text">Often times, the mountain in front of us can often seem insurmountable. I would like to remind everyone to not lose hope and to be mindful of the rewarding view from the summit.</p>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <small class="text-muted">Father John <br />     3/26/22 10:27AM</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Another Post -->
+                    <div class="col">
+                        <div class="card shadow-sm">
+                            <img src="/img/thePassion.jpg" alt="the passion" width="100%" height="275px" preserveAspectRatio="none">
+
+                            <div class="card-body">
+                                <h4>The Passion of Christ</h4>
+                                <p class="card-text">Please join us in the SVC Basilica this Monday at 7pm for a speical production of the Passion of Christ acted out by the members of our organization.</p>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <small class="text-muted">Brother David  <br />    3/25/22 3:21PM</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Another Post -->
+                    <div class="col">
+                        <div class="card shadow-sm">
+                            <img src="/img/youthEngaged.png" alt="youth engaged" width="100%" height="275px" preserveAspectRatio="none">
+
+                            <div class="card-body">
+                                <h4>Getting in Touch</h4>
+                                <p class="card-text">With winter coming to an end, let's take this time to get back in touch with ourselves and our peers by engaging in the world around us in a more Christ-like way.</p>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <small class="text-muted">Brother Mark   <br />   3/24/22 12:04PM</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Removes some of the hardcoded posts depending on the number of new posts created so that the flex box cards do not stretch -->
+                    @if (CreateModel.postCounter < 2)
+                    {
+                        <div class="col">
+                            <div class="card shadow-sm">
+                                <img src="/img/youthGroupMeeting.jpg" alt="youth meeting" width="100%" height="275px" preserveAspectRatio="none">
+
+                                <div class="card-body">
+                                    <h4>Teaching the Word</h4>
+                                    <p class="card-text">Do you have a passion for Christ? Do you enjoy public speaking? Come talk to Rev. George about joining the youth teaching corps in order to spread the Gospel to your peers outside the organization!</p>
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <small class="text-muted">Reverend George   <br />   3/22/22 2:14PM</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+
+                    <!-- Removes some of the hardcoded posts depending on the number of new posts created so that the flex box cards do not stretch -->
+                    @if (CreateModel.postCounter == 0)
+                    {
+                        <div class="col">
+                            <div class="card shadow-sm">
+                                <img src="/img/students.jpg" alt="students" width="100%" height="275px" preserveAspectRatio="none">
+
+                                <div class="card-body">
+                                    <h4>Free Portraits</h4>
+                                    <p class="card-text">Help Pastor Mark fine tune his photography skills by coming to pose for a free portrait with your friends this Tuesday at 12pm in the Carey Center!</p>
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <small class="text-muted">Pastor Mark   <br />   3/21/22 1:47PM</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <script src="/docs/5.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+
+</body>
+</html>

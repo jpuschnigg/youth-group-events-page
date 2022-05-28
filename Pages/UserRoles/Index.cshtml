@@ -1,0 +1,43 @@
+﻿@page
+@model YouthGroup.Pages.UserRoles.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+
+<h1>User Access</h1>
+
+<br/>
+
+<p><a asp-page="Create" type="button" class="btn btn-secondary" style="background-color: #52ab98; color: #ffffff; border: none ">Create New Role</a></p>
+<p><a asp-page="Assign" type="button" class="btn btn-secondary" style="background-color: #52ab98; color: #ffffff; border: none ">Assign Role</a></p>
+
+<br/>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                User
+            </th>
+            <th>
+                Role
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.UserList)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Email)
+                </td>
+                <td>
+                    @Model.GetRoles(item).Result
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
